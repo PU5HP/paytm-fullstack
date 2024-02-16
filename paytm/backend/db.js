@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb+srv://pu5hp:qU5ZDnDjn9wE9kSS@cluster0.l8hqvdz.mongodb.net/paytm');
-
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/');` if your database has auth enabled
+  await mongoose.connect('mongodb://localhost:27017/paytmDB');
 }
 
 const userSchema = new mongoose.Schema({

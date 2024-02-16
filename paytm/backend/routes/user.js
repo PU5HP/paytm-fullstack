@@ -1,11 +1,11 @@
 const express = require('express');
+const jwt = require('jsonwebtoken')
 const userRouter = express.Router();
 const zod = require('zod')
 const {JWT_SECRET} = require('../config')
 const {authMiddleware} = require("../middleware")
+const {User,Account} = require("../db");
 
-const User = require("../db");
-const Account = require("../db");
 
 //schema definition in zod
 const signupSchema = zod.object({
@@ -27,7 +27,7 @@ userRouter.post('/signup',async (req,res)=>{
 
     //check if body is in right format
     const body = req.body;
-    const success = signupSchema.safeParse(req.body);
+    const {success} = signupSchema.safeParse(req.body);
     if(!success){
         return res.json({
             message:"Email already taken / Incorrect Inputs"
@@ -38,7 +38,7 @@ userRouter.post('/signup',async (req,res)=>{
     const user = await User.findOne({
         username: body.username
     })
-    if(user._id){
+    if(user){
         return res.json({
             message:"Email already taken / Incorrect Inputs"
         })
@@ -51,7 +51,7 @@ userRouter.post('/signup',async (req,res)=>{
     },JWT_SECRET);
     
     //assigning random balances to the users
-    const userId = user._id;
+    const userId = dbUser._id;
 
 		/// ----- Create new account ------
 
