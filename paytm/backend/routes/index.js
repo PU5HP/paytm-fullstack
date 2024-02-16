@@ -4,7 +4,5 @@ const mainRouter = express.Router();
 
 
 
-
-
-export{mainRouter};
+module.exports = mainRouter;
 // /api/v1

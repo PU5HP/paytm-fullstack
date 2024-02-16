@@ -2,10 +2,10 @@ const express =require('express');
 
 const accountRouter = express.Router();
 
+const zod = require("zod");
+const {JWT_SECRET}=require("../config")
+const {authMiddleware}=require("../middleware")
 
-import {zod} from "zod";
-import { JWT_SECRET } from "../config";
-import { authMiddleware } from "../middleware";
 
 const User = require("../db");
 const Account = require("../db");
@@ -71,4 +71,4 @@ accountRouter.post('/transfer',authMiddleware,async (req,res)=>{
 })
 
 
-export{accountRouter};
+module.exports = accountRouter;

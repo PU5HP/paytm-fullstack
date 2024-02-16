@@ -3,9 +3,9 @@ const cors = require("cors");
 const app = express();
 const router = express.Router();
 
-import { mainRouter } from "./routes";
-import { accountRouter } from "./routes/account";
-import { userRouter } from "./routes/user";
+const mainRouter = require('./routes/index')
+const userRouter = require('./routes/user')
+const accountRouter = require('./routes/account')
 
 //MULTIPLE connections ports & json body parser for requests which have json
 app.use(cors());

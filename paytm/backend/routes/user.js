@@ -1,8 +1,8 @@
 const express = require('express');
 const userRouter = express.Router();
-import {zod} from "zod";
-import { JWT_SECRET } from "../config";
-import { authMiddleware } from "../middleware";
+const zod = require('zod')
+const {JWT_SECRET} = require('../config')
+const {authMiddleware} = require("../middleware")
 
 const User = require("../db");
 const Account = require("../db");
@@ -116,7 +116,7 @@ const updateBody = zod.object({
     lastName: zod.string().optional(),
 })
 
-userRouter.put('/',authMiddleware,async(req,res) => {
+userRouter.put("/", authMiddleware, async (req, res) => {
     const { success } = updateBody.safeParse(req.body)
     if (!success) {
         res.status(411).json({
@@ -124,13 +124,15 @@ userRouter.put('/',authMiddleware,async(req,res) => {
         })
     }
 
-		await User.updateOne({ _id: req.userId }, req.body);
-	
+    await User.updateOne(req.body, {
+        id: req.userId
+    })
+
     res.json({
         message: "Updated successfully"
     })
-
 })
+
 
 //searching friends and sending them money ?filter=har
 userRouter.get('/bulk',async(req,res)=>{
@@ -156,4 +158,5 @@ userRouter.get('/bulk',async(req,res)=>{
         }))
     })
 })
-export {userRouter};
+
+module.exports = userRouter;
